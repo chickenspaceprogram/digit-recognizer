@@ -1,12 +1,14 @@
 #ifndef NET_H
 #define NET_H
 
-#include "blas_wrapper.h"
 #include <stdlib.h>
 #include <stdbool.h>
-#include "rand.h"
+#include "libs/blas-wrapper.h"
+#include "libs/rand.h"
 
-typedef struct layer {
+typedef struct layer Layer;
+
+struct layer {
     const int size;
     bool malloc_error;
     float *weights;
@@ -17,8 +19,8 @@ typedef struct layer {
     // first Layer *: current layer
     // second Layer *: last layer
     // double (*)(double *): pointer to activation function
-    void (*set_activations)(Layer *, Layer *, double (*)(double *));
-} Layer;
+    void (*set_activations)(Layer *, Layer *, float (*)(float));
+};
 
 Layer newLayer(int size, int prev_size);
 

@@ -1,6 +1,6 @@
 #ifndef BLAS_WRAPPER_H
 #define BLAS_WRAPPER_H
-#include <cblas.h>
+#include <openblas/cblas.h>
 
 // computes Ax and stores the result in b
 // assumes A is in column-major order
