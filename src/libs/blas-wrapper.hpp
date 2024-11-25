@@ -10,7 +10,9 @@
 #elif defined(_WIN32)
 #define FALLBACK_BLAS
 #else
+extern "C" {
 #include <openblas/cblas.h>
+}
 #endif
 
 // adds the result of Ax to what is already stored in b

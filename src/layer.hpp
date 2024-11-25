@@ -3,8 +3,8 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
-#include "libs/blas-wrapper.h"
-#include "libs/rand.h"
+#include "libs/blas-wrapper.hpp"
+#include "libs/rand.hpp"
 
 typedef struct layer Layer;
 

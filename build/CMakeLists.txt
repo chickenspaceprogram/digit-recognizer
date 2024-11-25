@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
-project(digit-recognizer C)
+project(digit-recognizer CXX)
 
-set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 11)
 
 if (${WIN32})   ##### remove this line to use the fallback version of BLAS #####
 
@@ -16,7 +16,7 @@ set (BLAS_FOUND true)
 elseif (${APPLE})
 
 # using Apple's version of BLAS
-set (CMAKE_C_FLAGS "-DACCELERATE_NEW_LAPACK")
+set (CMAKE_CXX_FLAGS "-DACCELERATE_NEW_LAPACK")
 set (BLAS_FOUND true)
 set (BLAS "-lcblas")
 
@@ -33,11 +33,11 @@ endif ()
 add_subdirectory(../src/libs ./libs)
 
 add_executable(digit-recognizer
-    ../src/main.c
-    ../src/activation-funcs.c
-    ../src/activation-funcs.h
-    ../src/layer.c
-    ../src/layer.h
+    ../src/main.cpp
+    ../src/activation-funcs.cpp
+    ../src/activation-funcs.hpp
+    ../src/layer.cpp
+    ../src/layer.hpp
 )
 
 if (BLAS_FOUND)

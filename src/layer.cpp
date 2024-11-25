@@ -1,4 +1,4 @@
-#include "layer.h"
+#include "layer.hpp"
 
 void free_layer(Layer *layer);
 void set_activations(

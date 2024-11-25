@@ -1,4 +1,4 @@
-#include "activation-funcs.h"
+#include "activation-funcs.hpp"
 
 float ReLU(float val) {
     if (val > 0) {

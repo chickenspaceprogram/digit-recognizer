@@ -1,4 +1,4 @@
-#include "load-img.h"
+#include "load-img.hpp"
 
 static int get_int(FILE *file);
 
@@ -22,7 +22,7 @@ Images getImages(char *images_filename, char *labels_filename) {
         return images;
     }
     images.num_images = num_imgs;
-    images.images = malloc(sizeof(Image) * images.num_images);
+    images.images = (Image *)malloc(sizeof(Image) * images.num_images);
     if (images.images == NULL) {
         images.err_occurred = true;
         fclose(imgs_fp); fclose(labels_fp);

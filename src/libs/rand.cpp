@@ -1,4 +1,4 @@
-#include "rand.h"
+#include "rand.hpp"
 
 void seed_rand(void) {
 	srand((unsigned int) time(NULL));

@@ -1,4 +1,4 @@
-#include "blas-wrapper.h"
+#include "blas-wrapper.hpp"
 
 #ifdef FALLBACK_BLAS
 
