@@ -5,7 +5,7 @@
 #include <time.h>
 
 void seed_rand(void);
-double rand_weight(void);
+float rand_weight(void);
 
 
 #endif

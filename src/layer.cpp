@@ -1,67 +1,30 @@
 #include "layer.hpp"
 
-void free_layer(Layer *layer);
-void set_activations(
-    Layer *current,
-    Layer *prev,
-    float (*activation_fn)(float)
-);
 
-Layer newLayer(int size, int prev_size) {
-    Layer layer = {.size = size, .malloc_error = false, .free = &free_layer, .set_activations = &set_activations};
-    layer.weights = (float *)malloc(sizeof(double) * layer.size * prev_size);
-    if (layer.weights == NULL) {
-        layer.malloc_error = true;
-        goto weights;
+Layer::Layer(int size, int previous_size) : 
+    size(size)
+{
+    for (int i = 0; i < size * previous_size; ++i) {
+        weights.push_back(rand_weight());
+        weights_deriv.push_back((float)0);
     }
-
-    for (int i = 0; i < layer.size * prev_size; ++i) {
-        layer.weights[i] = rand_weight();
+    for (int i = 0; i < size; ++i) {
+        biases.push_back((float)0);
+        biases_deriv.push_back((float)0);
+        activations.push_back((float)0);
+        activations_deriv.push_back((float)0);
+        activations_no_fn.push_back((float)0);
     }
-
-    layer.activations = (float *)malloc(sizeof(double) * layer.size);
-    if (layer.activations == NULL) {
-        layer.malloc_error = true;
-        goto activations;
-    }
-    
-    layer.activations_no_fn = (float *)malloc(sizeof(double) * layer.size);
-    if (layer.activations_no_fn == NULL) {
-        layer.malloc_error = true;
-        goto activations_no_fn;
-    }
-
-    layer.biases = (float *)malloc(sizeof(double) * layer.size);
-    if (layer.biases == NULL) {
-        layer.malloc_error = true;
-        goto biases;
-    }
-
-    for (int i = 0; i < layer.size; ++i) {
-        layer.biases[i] = 0;
-    }
-    
-    biases:
-    free(layer.activations);
-    activations_no_fn:
-    free(layer.activations_no_fn);
-    activations:
-    free(layer.weights);
-    weights:
-    return layer;
 }
 
-void free_layer(Layer *layer) {
-    free(layer->activations);
-    free(layer->activations_no_fn);
-    free(layer->biases);
-    free(layer->weights);
+int Layer::GetSize() const {
+    return size;
 }
 
-void set_activations(Layer *current, Layer *prev, float (*activation_fn)(float)) {
-    mtrx_vec_mult(current->weights, prev->activations, current->activations_no_fn, prev->size, current->size);
-    vec_add(current->biases, current->activations_no_fn, current->size);
-    for (int i = 0; i < current->size; ++i) {
-        current->activations[i] = activation_fn(current->activations_no_fn[i]);
+void Layer::SetActivations(Layer& prev_layer, ActivationFunction& fn) {
+    mtrx_vec_mult(&weights[0], &(prev_layer.activations[0]), &activations_no_fn[0], prev_layer.GetSize(), size);
+    vec_add(&biases[0], &activations_no_fn[0], size);
+    for (int i = 0; i < size; ++i) {
+        activations[i] = fn.Function(activations_no_fn[i]);
     }
 }

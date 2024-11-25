@@ -12,5 +12,8 @@
 
 int main(void) {
     seed_rand();
-    printf("Hello world\n");
+    std::vector<Layer> layers;
+    Layer layer(1, 2);
+    layers.push_back(layer);
+    
 }
