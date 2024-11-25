@@ -10,16 +10,16 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-typedef struct image {
+struct Image {
     double pixels[ROWS * COLS];
     unsigned char label;
-} Image;
+};
 
-typedef struct images {
+struct Images {
     Image *images;
     int num_images;
     bool err_occurred;
-} Images;
+};
 
 Images getImages(char *images_filename, char *labels_filename);
 
