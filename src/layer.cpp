@@ -9,7 +9,7 @@ void set_activations(
 
 Layer newLayer(int size, int prev_size) {
     Layer layer = {.size = size, .malloc_error = false, .free = &free_layer, .set_activations = &set_activations};
-    layer.weights = malloc(sizeof(double) * layer.size * prev_size);
+    layer.weights = (float *)malloc(sizeof(double) * layer.size * prev_size);
     if (layer.weights == NULL) {
         layer.malloc_error = true;
         goto weights;
@@ -19,19 +19,19 @@ Layer newLayer(int size, int prev_size) {
         layer.weights[i] = rand_weight();
     }
 
-    layer.activations = malloc(sizeof(double) * layer.size);
+    layer.activations = (float *)malloc(sizeof(double) * layer.size);
     if (layer.activations == NULL) {
         layer.malloc_error = true;
         goto activations;
     }
     
-    layer.activations_no_fn = malloc(sizeof(double) * layer.size);
+    layer.activations_no_fn = (float *)malloc(sizeof(double) * layer.size);
     if (layer.activations_no_fn == NULL) {
         layer.malloc_error = true;
         goto activations_no_fn;
     }
 
-    layer.biases = malloc(sizeof(double) * layer.size);
+    layer.biases = (float *)malloc(sizeof(double) * layer.size);
     if (layer.biases == NULL) {
         layer.malloc_error = true;
         goto biases;
