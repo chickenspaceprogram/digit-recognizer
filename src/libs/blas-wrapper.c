@@ -1,6 +1,6 @@
 #include "blas-wrapper.h"
 
-#ifdef _WIN32
+#ifdef FALLBACK_BLAS
 
 void mtrx_vec_mult_add(float *A, float *x, float *b, int input_dim, int output_dim) {
     for (int i = 0; i < input_dim; ++i) {

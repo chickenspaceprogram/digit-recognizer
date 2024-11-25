@@ -36,6 +36,18 @@ To compile this project, you will need to install the following:
 
 ### Linux
 
+You will need to install OpenBLAS through your package manager. Instructions for doing this are [here](https://github.com/OpenMathLib/OpenBLAS/wiki/Precompiled-installation-packages).
+
 This project has only been tested on Fedora. You may or may not have to alter the build system a bit to get it to compile on other distributions, since other distributions may put OpenBLAS in different places.
 
-With that said, you will need to install OpenBLAS through your package manager. Instructions for doing this are [here](https://github.com/OpenMathLib/OpenBLAS/wiki/Precompiled-installation-packages).
+### Notes
+
+#### Fallback BLAS
+
+Included in this project is a fallback version of BLAS. This version is likely much slower than the actual BLAS, but if you encounter errors when installing BLAS or building the project, you should try using the fallback version.
+
+To use the fallback version, remove the lines in `src/libs/blas-wrapper.h` and `build/CMakeLists.txt` marked with the following text:
+
+`##### remove this line to use the fallback version of BLAS #####`
+
+If you use the fallback version of BLAS, you do not need to install BLAS.

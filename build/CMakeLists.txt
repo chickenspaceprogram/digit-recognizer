@@ -2,18 +2,23 @@ cmake_minimum_required(VERSION 3.15)
 project(digit-recognizer C)
 
 set(CMAKE_C_STANDARD 11)
-if (${APPLE})
+
+if (${WIN32})   ##### remove this line to use the fallback version of BLAS #####
+
+set (FALLBACK_BLAS true)
+
+endif ()        ##### remove this line to use the fallback version of BLAS #####
+
+if (FALLBACK_BLAS)
+
+set (BLAS_FOUND true)
+
+elseif (${APPLE})
 
 # using Apple's version of BLAS
 set (CMAKE_C_FLAGS "-DACCELERATE_NEW_LAPACK")
 set (BLAS_FOUND true)
 set (BLAS "-lcblas")
-
-elseif (${WIN32})
-
-# using a hand-coded, bad version of BLAS since getting the actual thing to work on windows was a pain
-# this will slow down the windows version massively but i'm not developing this on windows so i don't really care
-set (BLAS_FOUND true)
 
 else ()
 
