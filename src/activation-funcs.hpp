@@ -6,16 +6,36 @@
 #define LEAKY_RELU_ALPHA 0.01
 #define ELU_ALPHA 1
 
-float ReLU(float val);
-float ReLU_deriv(float val);
+enum ActivationFnType {
+    ReLU,
+    Sigmoid,
+    ELU,
+    LeakyReLU,
+};
 
-float sigmoid(float val);
-float sigmoid_deriv(float val);
+struct ActivationFunction {
+    virtual float Function(float input) = 0;
+    virtual float Derivative(float input) = 0;
+};
 
-float ELU(float val);
-float ELU_deriv(float val);
+class ReLU : ActivationFunction {
+    virtual float Function(float input);
+    virtual float Derivative(float input);
+};
 
-float leaky_ReLU(float val);
-float leaky_ReLU_deriv(float val);
+class Sigmoid : ActivationFunction {
+    virtual float Function(float input);
+    virtual float Derivative(float input);
+};
+
+class ELU : ActivationFunction {
+    virtual float Function(float input);
+    virtual float Derivative(float input);
+};
+
+class LeakyReLU : ActivationFunction {
+    virtual float Function(float input);
+    virtual float Derivative(float input);
+};
 
 #endif

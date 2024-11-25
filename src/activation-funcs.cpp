@@ -1,46 +1,47 @@
 #include "activation-funcs.hpp"
 
-float ReLU(float val) {
+
+float ReLU::Function(float val) {
     if (val > 0) {
         return val;
     }
     return 0;
 }
-float ReLU_deriv(float val) {
+float ReLU::Derivative(float val) {
     if (val > 0) {
         return 1;
     }
     return 0;
 }
 
-float sigmoid(float val) {
+float Sigmoid::Function(float val) {
     return 1 / (expf(-val) + 1);
 }
-float sigmoid_deriv(float val) {
-    float sig = sigmoid(val);
+float Sigmoid::Derivative(float val) {
+    float sig = Sigmoid::Function(val);
     return sig * (1 - sig);
 }
 
-float ELU(float val) {
+float ELU::Function(float val) {
     if (val >= 0) {
         return val;
     }
     return ELU_ALPHA * (expf(val) - 1);
 }
-float ELU_deriv(float val) {
+float ELU::Derivative(float val) {
     if (val >= 0) {
         return 1;
     }
     return ELU_ALPHA * expf(val);
 }
 
-float leaky_ReLU(float val) {
+float LeakyReLU::Function(float val) {
     if (val >= 0) {
         return val;
     }
     return LEAKY_RELU_ALPHA * val;
 }
-float leaky_ReLU_deriv(float val) {
+float LeakyReLU::Derivative(float val) {
     if (val > 0) {
         return 1;
     }
