@@ -56,6 +56,7 @@ int get_int(FILE *file) {
     int val = 0;
     for (int i = 0; i < sizeof(int) && !feof(file); ++i) {
         val += fgetc(file);
-        val << 8;
+        val <<= 8;
     }
+    return val;
 }

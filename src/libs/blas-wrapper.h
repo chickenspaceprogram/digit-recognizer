@@ -1,6 +1,14 @@
 #ifndef BLAS_WRAPPER_H
 #define BLAS_WRAPPER_H
+#if defined(__APPLE__) && defined(__MACH__)
+#include <Accelerate/Accelerate.h>
+#elif defined(_WIN32)
+#else
 #include <openblas/cblas.h>
+#endif
+
+// adds the result of Ax to what is already stored in b
+void mtrx_vec_mult_add(float *A, float *x, float *b, int input_dim, int output_dim);
 
 // computes Ax and stores the result in b
 // assumes A is in column-major order
