@@ -1,5 +1,5 @@
-#ifndef NET_H
-#define NET_H
+#ifndef NET_HPP
+#define NET_HPP
 
 #include <stdlib.h>
 #include <stdbool.h>

@@ -1,5 +1,5 @@
-#ifndef LOAD_IMG_H
-#define LOAD_IMG_H
+#ifndef LOAD_IMG_HPP
+#define LOAD_IMG_HPP
 
 #define ROWS    28
 #define COLS    28

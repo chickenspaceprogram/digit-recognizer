@@ -1,5 +1,5 @@
-#ifndef ACTIVATION_FUNCS_H
-#define ACTIVATION_FUNCS_H
+#ifndef ACTIVATION_FUNCS_HPP
+#define ACTIVATION_FUNCS_HPP
 
 #include <math.h>
 

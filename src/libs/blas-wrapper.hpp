@@ -1,5 +1,5 @@
-#ifndef BLAS_WRAPPER_H
-#define BLAS_WRAPPER_H
+#ifndef BLAS_WRAPPER_HPP
+#define BLAS_WRAPPER_HPP
 
 /*  ##### remove this line to use the fallback version of BLAS #####
 #define FALLBACK_BLAS
