@@ -2,7 +2,8 @@
 
 
 Layer::Layer(int size, int previous_size) : 
-    size(size)
+    size(size),
+    prev_size(previous_size)
 {
     for (int i = 0; i < size * previous_size; ++i) {
         weights.push_back(rand_weight());
@@ -29,18 +30,18 @@ void Layer::SetActivations(Layer& prev_layer, ActivationFunction& fn) {
     }
 }
 
-void Layer::BackProp(Layer &next_layer, ActivationFunction &fn) {
+void Layer::CalcGradients(Layer &last_layer, ActivationFunction &fn) {
     float temp;
     for (int j = 0; j < size; ++j) {
         biases_deriv[j] = fn.Derivative(activations_no_fn[j]) * activations_deriv[j];
         for (int k = 0; k < last_layer.GetSize(); ++k) {
-            weights_deriv[j * size + k] = biases_deriv[j] * last_layer.activations[k];
+            weights_deriv[j + k * size] = biases_deriv[j] * last_layer.activations[k];
         }
     }
     for (int k = 0; k < last_layer.GetSize(); ++k) {
         temp = 0;
         for (int j = 0; j < size; ++j) {
-            temp += biases_deriv[j] * weights_deriv[j * size + k];
+            temp += biases_deriv[j] * weights_deriv[j + k * size];
         }
         last_layer.activations_deriv[k] = temp;
     }

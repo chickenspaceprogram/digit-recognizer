@@ -38,6 +38,8 @@ add_executable(digit-recognizer
     ../src/activation-funcs.hpp
     ../src/layer.cpp
     ../src/layer.hpp
+    ../src/network.hpp
+    ../src/network.cpp
 )
 
 if (BLAS_FOUND)

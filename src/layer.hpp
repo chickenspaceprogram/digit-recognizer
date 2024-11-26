@@ -11,7 +11,7 @@ class Layer {
     public:
         Layer(int size, int previous_size);
         void SetActivations(Layer& prev_layer, ActivationFunction& fn);
-        void BackProp(Layer &next_layer, ActivationFunction& fn);
+        void CalcGradients(Layer &last_layer, ActivationFunction& fn);
         int GetSize() const;
         std::vector<float> weights;
         std::vector<float> weights_deriv;
@@ -24,6 +24,7 @@ class Layer {
 
     private:
         const int size;
+        const int prev_size;
         std::vector<float> activations_no_fn;
 };
 
