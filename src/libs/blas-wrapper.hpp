@@ -15,6 +15,8 @@ extern "C" {
 }
 #endif
 
+extern "C" {
+
 // adds the result of Ax to what is already stored in b
 void mtrx_vec_mult_add(float *A, float *x, float *b, int input_dim, int output_dim);
 
@@ -24,5 +26,10 @@ void mtrx_vec_mult(float *A, float *x, float *b, int input_dim, int output_dim);
 
 // stores v1 + v2 in v2
 void vec_add(float *v1, float *v2, int size);
+
+// transposes A, then multiplies by x
+void mtrx_transpose_vec_mult(float *A, float *x, float *b, int input_dim, int output_dim);
+
+}
 
 #endif
