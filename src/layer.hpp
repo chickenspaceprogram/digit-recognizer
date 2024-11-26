@@ -11,6 +11,7 @@ class Layer {
     public:
         Layer(int size, int previous_size);
         void SetActivations(Layer& prev_layer, ActivationFunction& fn);
+        void BackProp(Layer &next_layer, ActivationFunction& fn);
         int GetSize() const;
         std::vector<float> weights;
         std::vector<float> weights_deriv;
@@ -19,12 +20,13 @@ class Layer {
         std::vector<float> biases_deriv;
 
         std::vector<float> activations;
-        std::vector<float> activations_deriv
-        
-        std::vector<float> activations_no_fn;
+        std::vector<float> activations_deriv;
 
     private:
         const int size;
+        std::vector<float> activations_no_fn;
+        void FindBiasDeriv(ActivationFunction& fn);
+        void FindWeightDeriv(ActivationFunction& fn);
 };
 
 #endif

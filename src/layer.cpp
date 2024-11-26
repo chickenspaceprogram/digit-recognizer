@@ -6,6 +6,8 @@ Layer::Layer(int size, int previous_size) :
 {
     for (int i = 0; i < size * previous_size; ++i) {
         weights.push_back(rand_weight());
+    }
+    for (int i = 0; i < previous_size; ++i) {
         weights_deriv.push_back((float)0);
     }
     for (int i = 0; i < size; ++i) {
@@ -26,5 +28,15 @@ void Layer::SetActivations(Layer& prev_layer, ActivationFunction& fn) {
     vec_add(&biases[0], &activations_no_fn[0], size);
     for (int i = 0; i < size; ++i) {
         activations[i] = fn.Function(activations_no_fn[i]);
+    }
+}
+
+void Layer::BackProp(Layer &next_layer, ActivationFunction& fn) {
+    FindBiasDeriv(fn);
+}
+
+void Layer::FindBiasDeriv(ActivationFunction& fn) {
+    for (int i = 0; i < size; ++i) {
+        biases_deriv[i] = fn.Derivative(activations_no_fn);
     }
 }
