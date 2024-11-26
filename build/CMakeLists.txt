@@ -32,18 +32,15 @@ endif ()
 
 
 add_subdirectory(../src/libs ./libs)
+add_subdirectory(../src/network ./network)
 
 add_executable(digit-recognizer
     ../src/main.cpp
-    ../src/activation-funcs.cpp
-    ../src/activation-funcs.hpp
-    ../src/layer.cpp
-    ../src/layer.hpp
-    ../src/network.hpp
-    ../src/network.cpp
+    ../src/train.cpp
+    ../src/train.hpp
 )
 
 if (BLAS_FOUND)
     message("BLAS found! Compilation can proceed.")
-    target_link_libraries(digit-recognizer ${BLAS_LIBRARIES} libs -lm ${BLAS})
+    target_link_libraries(digit-recognizer ${BLAS_LIBRARIES} libs network -lm ${BLAS})
 endif(BLAS_FOUND)

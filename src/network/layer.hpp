@@ -3,8 +3,8 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
-#include "libs/blas-wrapper.hpp"
-#include "libs/rand.hpp"
+#include "../libs/blas-wrapper.hpp"
+#include "../libs/rand.hpp"
 #include "activation-funcs.hpp"
 
 class Layer {
