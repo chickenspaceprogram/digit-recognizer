@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 project(digit-recognizer CXX)
 
 set(CMAKE_CXX_STANDARD 11)
+#set(CMAKE_BUILD_TYPE Release)
 
 if (${WIN32})   ##### remove this line to use the fallback version of BLAS #####
 

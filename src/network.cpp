@@ -16,4 +16,12 @@ Network::Network(int input_len, int hidden_len, int output_len, int num_hidden_l
             Layer layer(hidden_len, hidden_len);
             this->hidden.push_back(layer);
         }
+}
+
+void Network::Zero() {
+    start.Zero();
+    end.Zero();
+    for (int i = 0; i < hidden.size(); ++i) {
+        hidden[i].Zero();
     }
+}

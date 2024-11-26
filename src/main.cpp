@@ -1,5 +1,7 @@
 // testing for compile errors
 #include "layer.hpp"
+#include "network.hpp"
+#include "cost-funcs.hpp"
 #include "activation-funcs.hpp"
 
 #include "libs/rand.hpp"
@@ -12,8 +14,5 @@
 
 int main(void) {
     seed_rand();
-    std::vector<Layer> layers;
-    Layer layer(1, 2);
-    layers.push_back(layer);
     
 }

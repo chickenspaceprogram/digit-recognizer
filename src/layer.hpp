@@ -12,6 +12,7 @@ class Layer {
         Layer(int size, int previous_size);
         void SetActivations(Layer& prev_layer, ActivationFunction& fn);
         void CalcGradients(Layer &last_layer, ActivationFunction& fn);
+        void Zero();
         int GetSize() const;
         std::vector<float> weights;
         std::vector<float> weights_deriv;

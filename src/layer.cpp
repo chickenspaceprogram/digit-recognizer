@@ -46,3 +46,13 @@ void Layer::CalcGradients(Layer &last_layer, ActivationFunction &fn) {
         last_layer.activations_deriv[k] = temp;
     }
 }
+
+void Layer::Zero() {
+    for (int j = 0; j < size; ++j) {
+        biases_deriv[j] = 0;
+        activations_deriv[j] = 0;
+        for (int k = 0; k < size; ++k) {
+            weights_deriv[j + k * size] = 0;
+        }
+    }
+}
