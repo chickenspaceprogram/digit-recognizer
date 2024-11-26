@@ -6,21 +6,19 @@
 #define IMG_MAGIC_NUM 2051
 #define LABEL_MAGIC_NUM 2049
 
+#define IMG_ENOENT 1
+#define BAD_FILE 2
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <vector>
 
 struct Image {
     double pixels[ROWS * COLS];
     unsigned char label;
 };
 
-struct Images {
-    Image *images;
-    int num_images;
-    bool err_occurred;
-};
-
-Images getImages(char *images_filename, char *labels_filename);
+std::vector<Image> getImages(char *images_filename, char *labels_filename);
 
 #endif
