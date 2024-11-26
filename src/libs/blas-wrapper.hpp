@@ -30,6 +30,8 @@ void vec_add(float *v1, float *v2, int size);
 // transposes A, then multiplies by x
 void mtrx_transpose_vec_mult(float *A, float *x, float *b, int input_dim, int output_dim);
 
+float vec_dot(float *v1, float *v2, int size);
+
 }
 
 #endif

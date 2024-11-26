@@ -25,8 +25,6 @@ class Layer {
     private:
         const int size;
         std::vector<float> activations_no_fn;
-        void FindBiasDeriv(ActivationFunction& fn);
-        void FindWeightDeriv(ActivationFunction& fn);
 };
 
 #endif
