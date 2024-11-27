@@ -7,14 +7,14 @@
 
 class CostFunction {
     public:
-        virtual float Function(std::vector<float> output, std::vector<float> target);
-        virtual std::vector<float> Derivative(std::vector<float> output, std::vector<float> target);
+        virtual float Function(std::vector<float> &output, std::vector<float> &target);
+        virtual std::vector<float> Derivative(std::vector<float> &output, std::vector<float> &target);
 };
 
 class SquaredErr : CostFunction {
     public:
-        virtual float Function(std::vector<float> output, std::vector<float> target);
-        virtual std::vector<float> Derivative(std::vector<float> output, std::vector<float> target);
+        virtual float Function(std::vector<float> &output, std::vector<float> &target);
+        virtual std::vector<float> Derivative(std::vector<float> &output, std::vector<float> &target);
 };
 
 #endif

@@ -5,6 +5,14 @@ Layer::Layer(int size, int previous_size) :
     size(size),
     prev_size(previous_size)
 {
+    weights.reserve(size * previous_size);
+    weights_deriv.reserve(size * previous_size);
+    biases.reserve(size);
+    biases_deriv.reserve(size);
+    activations.reserve(size);
+    activations_deriv.reserve(size);
+    activations_no_fn.reserve(size);
+    
     for (int i = 0; i < size * previous_size; ++i) {
         weights.push_back(rand_weight());
         weights_deriv.push_back((float)0);

@@ -24,8 +24,8 @@ class Layer {
         std::vector<float> activations_deriv;
 
     private:
-        const int size;
-        const int prev_size;
+        int size;
+        int prev_size;
         std::vector<float> activations_no_fn;
 };
 

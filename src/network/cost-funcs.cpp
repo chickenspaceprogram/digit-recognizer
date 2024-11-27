@@ -1,6 +1,6 @@
 #include "cost-funcs.hpp"
 
-float SquaredErr::Function(std::vector<float> output, std::vector<float> target) {
+float SquaredErr::Function(std::vector<float> &output, std::vector<float> &target) {
     float err = 0;
     if (output.size() != target.size()) {
         throw NOT_SAME_LEN;
@@ -11,7 +11,7 @@ float SquaredErr::Function(std::vector<float> output, std::vector<float> target)
     return err;
 }
 
-std::vector<float> SquaredErr::Derivative(std::vector<float> output, std::vector<float> target) {
+std::vector<float> SquaredErr::Derivative(std::vector<float> &output, std::vector<float> &target) {
     std::vector<float> out;
     if (output.size() != target.size()) {
         throw NOT_SAME_LEN;
