@@ -5,16 +5,14 @@
 
 #include <vector>
 
-class CostFunction {
-    public:
-        virtual float Function(std::vector<float> &output, std::vector<float> &target);
-        virtual std::vector<float> Derivative(std::vector<float> &output, std::vector<float> &target);
+struct CostFunction {
+        virtual float Function(std::vector<float> &output, std::vector<float> &target) = 0;
+        virtual std::vector<float> Derivative(std::vector<float> &output, std::vector<float> &target) = 0;
 };
 
-class SquaredErr : CostFunction {
-    public:
-        virtual float Function(std::vector<float> &output, std::vector<float> &target);
-        virtual std::vector<float> Derivative(std::vector<float> &output, std::vector<float> &target);
+struct SquaredErr : public CostFunction {
+    virtual float Function(std::vector<float> &output, std::vector<float> &target);
+    virtual std::vector<float> Derivative(std::vector<float> &output, std::vector<float> &target);
 };
 
 #endif

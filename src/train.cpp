@@ -19,9 +19,13 @@ Derivatives train_once(Network &network, std::vector<std::vector<float>> &input,
 
     for (int i = 0; i < num_inputs; ++i) {
         rand_selection = randint(0, input_len);
+        printf("%d\n", rand_selection);
         network.SetInput(input[rand_selection]);
         network.RunNetwork(act_fn);
-        printf("%f", cost_fn.Function(network.GetOutput(), target[i]));
+        for (float i : network.GetOutput()) {
+            printf("%f ", i);
+        }
+        printf("\n\n");
         network.SetOutputDeriv(cost_fn.Derivative(network.GetOutput(), target[i]));
         network.BackProp(act_fn);
         if (i == 0) {

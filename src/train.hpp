@@ -13,6 +13,6 @@
 
 // num_inputs : the number of inputs to use in the training
 // learning_multiplier > 0 for training to happen
-Derivatives train_once(Network &network, std::vector<std::vector<float>> &input, std::vector<std::vector<float>> &target, int num_inputs, ActivationFunction &fn);
+Derivatives train_once(Network &network, std::vector<std::vector<float>> &input, std::vector<std::vector<float>> &target, int num_inputs, ActivationFunction &act_fn, CostFunction &cost_fn);
 
 #endif

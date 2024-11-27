@@ -4,14 +4,15 @@
 #include <vector>
 
 struct LayerDerivatives {
-    void operator+=(const LayerDerivatives &derivs);
-    static LayerDerivatives GetLayerDerivatives(const Layer &layer);
+    void operator+=(LayerDerivatives const &derivs);
+    static LayerDerivatives GetLayerDerivatives(Layer &layer);
+    void SetLayerDerivatives(Layer &layer, float multiplier);
     std::vector<float> bias;
     std::vector<float> weight;
 };
 
 struct Derivatives {
-    void operator+=(const Derivatives &derivs);
+    void operator+=(Derivatives const &derivs);
     std::vector<LayerDerivatives> hidden;
     LayerDerivatives input;
     LayerDerivatives output;
@@ -19,7 +20,7 @@ struct Derivatives {
 
 class Network {
     public:
-        Network(int input_len, int hidden_len, int output_len, int num_hidden_layers, int gradient_mult);
+        Network(int input_len, int hidden_len, int output_len, int num_hidden_layers, float gradient_mult);
         void Zero();
         int GetNumHidden();
         int GetHiddenLen();
@@ -32,6 +33,7 @@ class Network {
         void RunNetwork(ActivationFunction &fn);
         void BackProp(ActivationFunction &fn);
         Derivatives GetCurrentDerivatives();
+        void AddDerivatives(Derivatives &derivs, float multiplier);
     private:
         int input_len;
         int hidden_len;

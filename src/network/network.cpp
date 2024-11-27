@@ -1,6 +1,6 @@
 #include "network.hpp"
 
-Network::Network(int input_len, int hidden_len, int output_len, int num_hidden_layers, int gradient_mult) : 
+Network::Network(int input_len, int hidden_len, int output_len, int num_hidden_layers, float gradient_mult) : 
 input_len(input_len), 
 hidden_len(hidden_len),
 output_len(output_len), 
@@ -79,7 +79,15 @@ Derivatives Network::GetCurrentDerivatives() {
     return derivs;
 }
 
-void LayerDerivatives::operator+=(const LayerDerivatives &derivs) {
+void Network::AddDerivatives(Derivatives &derivs, float multiplier) {
+    derivs.input.SetLayerDerivatives(start, multiplier);
+    derivs.output.SetLayerDerivatives(end, multiplier);
+    for (int i = 0; i < num_hidden_layers; ++i) {
+        derivs.hidden[i].SetLayerDerivatives(hidden[i], multiplier);
+    }
+}
+
+void LayerDerivatives::operator+=(LayerDerivatives const &derivs) {
     for (int i = 0; i < derivs.bias.size(); ++i) {
         bias[i] += derivs.bias[i];
     }
@@ -88,7 +96,7 @@ void LayerDerivatives::operator+=(const LayerDerivatives &derivs) {
     }
 }
 
-void Derivatives::operator+=(const Derivatives &derivs) {
+void Derivatives::operator+=(Derivatives const &derivs) {
     input += derivs.input;
     output += derivs.output;
     for (int i = 0; i < hidden.size(); ++i) {
@@ -96,9 +104,19 @@ void Derivatives::operator+=(const Derivatives &derivs) {
     }
 }
 
-LayerDerivatives LayerDerivatives::GetLayerDerivatives(const Layer &layer) {
+LayerDerivatives LayerDerivatives::GetLayerDerivatives(Layer &layer) {
     LayerDerivatives lderivs;
     lderivs.bias = layer.biases_deriv;
     lderivs.weight = layer.weights_deriv;
     return lderivs;
+}
+
+void LayerDerivatives::SetLayerDerivatives(Layer &layer, float multiplier) {
+    for (int i = 0; i < layer.biases_deriv.size(); ++i) {
+        layer.biases[i] += bias[i] * multiplier;
+    }
+
+    for (int i = 0; i < layer.weights_deriv.size(); ++i) {
+        layer.weights[i] += weight[i] * multiplier;
+    }
 }
