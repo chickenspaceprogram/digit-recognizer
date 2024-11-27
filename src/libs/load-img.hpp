@@ -14,11 +14,7 @@
 #include <stdlib.h>
 #include <vector>
 
-struct Image {
-    double pixels[ROWS * COLS];
-    unsigned char label;
-};
-
-std::vector<Image> getImages(char *images_filename, char *labels_filename);
+std::vector<std::vector<float>> GetImages(char *images_filename);
+std::vector<std::vector<float>> GetLabels(char *labels_filename);
 
 #endif
