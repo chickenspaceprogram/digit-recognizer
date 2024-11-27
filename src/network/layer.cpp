@@ -33,14 +33,11 @@ int Layer::GetSize() const {
 }
 
 void Layer::SetActivations(Layer& prev_layer, ActivationFunction& fn) {
-    //FILE *fp = fopen("out.txt", "a");
     mtrx_vec_mult(&weights[0], &(prev_layer.activations[0]), &activations_no_fn[0], prev_layer.GetSize(), size);
     vec_add(&biases[0], &activations_no_fn[0], size);
     for (int i = 0; i < size; ++i) {
         activations[i] = fn.Function(activations_no_fn[i]);
-        //fprintf(fp, "(prev=%f, cur=%f)\n", prev_layer.activations[i], activations[i]);
     }
-    //fprintf(fp, "\n\n\n");
 }
 
 void Layer::CalcGradients(Layer &last_layer, ActivationFunction &fn) {

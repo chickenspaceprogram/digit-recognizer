@@ -20,6 +20,7 @@ struct Derivatives {
 
 class Network {
     public:
+        Network() = delete;
         Network(int input_len, int hidden_len, int output_len, int num_hidden_layers, float gradient_mult);
         void Zero();
         int GetNumHidden();
@@ -30,10 +31,10 @@ class Network {
         void SetInput(std::vector<float> inputs);
         void SetOutputDeriv(std::vector<float> outputs);
         std::vector<float> &GetOutput();
-        void RunNetwork(ActivationFunction &fn);
-        void BackProp(ActivationFunction &fn);
+        void RunNetwork(ActivationFunction &fn, ActivationFunction &end_actfn);
+        void BackProp(ActivationFunction &fn, ActivationFunction &end_actfn);
         Derivatives GetCurrentDerivatives();
-        void AddDerivatives(Derivatives &derivs, float multiplier);
+        void AddDerivatives(Derivatives &derivs);
     private:
         int input_len;
         int hidden_len;

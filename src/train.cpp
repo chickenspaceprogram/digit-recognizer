@@ -1,6 +1,6 @@
 #include "train.hpp"
 
-Derivatives train_once(Network &network, std::vector<std::vector<float>> &input, std::vector<std::vector<float>> &target, int num_inputs, ActivationFunction &act_fn, CostFunction &cost_fn) {
+Derivatives train_once(Network &network, std::vector<std::vector<float>> &input, std::vector<std::vector<float>> &target, int num_inputs, ActivationFunction &act_fn, CostFunction &cost_fn, ActivationFunction &end_activation_fn) {
     if (input.size() == 0) {
         throw INPUT_ERROR;
     }
@@ -11,28 +11,39 @@ Derivatives train_once(Network &network, std::vector<std::vector<float>> &input,
         throw INPUT_TARGET_INVALID_LEN;
     }
 
-    int input_len = input[0].size();
-    int target_len = target[0].size();
+    int input_len = input.size();
+    int target_len = target.size();
     int rand_selection;
 
     Derivatives derivatives;
+    FILE *fp = fopen("thing.txt", "a");
+    FILE *fpout = fopen("outvals.txt", "a");
 
     for (int i = 0; i < num_inputs; ++i) {
         rand_selection = randint(0, input_len);
-        printf("%d\n", rand_selection);
         network.SetInput(input[rand_selection]);
-        network.RunNetwork(act_fn);
-        for (float i : network.GetOutput()) {
-            printf("%f ", i);
+        network.RunNetwork(act_fn, end_activation_fn);
+        network.SetOutputDeriv(cost_fn.Derivative(network.GetOutput(), target[rand_selection]));
+        fprintf(fp, "%f,", cost_fn.Function(network.GetOutput(), target[rand_selection]));
+        //for (float j : cost_fn.Derivative(network.GetOutput(), target[i])) {
+        //    fprintf(fpout, "%f,", j);
+        //}
+        //fputc('\n', fpout);
+        for (int j = 0; j < network.GetOutput().size(); ++j) {
+            fprintf(fpout, "(%f,%f),", network.GetOutput()[j], target[i][j]);
         }
-        printf("\n\n");
-        network.SetOutputDeriv(cost_fn.Derivative(network.GetOutput(), target[i]));
-        network.BackProp(act_fn);
+        fputc('\n', fpout);
+        network.BackProp(act_fn, end_activation_fn);
         if (i == 0) {
             derivatives = network.GetCurrentDerivatives();
             continue;
         }
         derivatives += network.GetCurrentDerivatives();
     }
-    return derivatives; // gotta divide, yo
+    fputc('\n', fp);
+    fputc('\n', fpout);
+    fclose(fp);
+    fclose(fpout);
+    return derivatives;
 }
+

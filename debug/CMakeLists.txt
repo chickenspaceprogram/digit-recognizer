@@ -3,6 +3,7 @@ project(digit-recognizer CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 
 if (${WIN32})   ##### remove this line to use the fallback version of BLAS #####
 

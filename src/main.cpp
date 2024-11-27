@@ -5,11 +5,11 @@
 #include "libs/load-img.hpp"
 
 
-#define NUM_HIDDEN 2
+#define NUM_HIDDEN 10
 #define HIDDEN_SIZE 16
-#define GRADIENT_MULT -0.2
+#define GRADIENT_MULT 0.01
 #define BATCH_SIZE 100
-#define NUM_ITERS 100
+#define NUM_ITERS 1000
 
 int main(void) {
     seed_rand();
@@ -29,16 +29,17 @@ int main(void) {
     }
     std::cout << "Loaded images!" << std::endl;
     ReLU actfn;
+    ReLU endactfn;
     SquaredErr costfn;
 
-    Network net(train_inputs[0].size(), HIDDEN_SIZE, train_outputs[0].size(), NUM_HIDDEN, GRADIENT_MULT);
+    Network net(train_inputs[0].size(), HIDDEN_SIZE, train_outputs[0].size(), NUM_HIDDEN, GRADIENT_MULT / BATCH_SIZE);
     std::cout << "Network initialized!" << std::endl;
     Derivatives derivs;
     for (int i = 0; i < NUM_ITERS; ++i) {
-        derivs = train_once(net, train_inputs, train_outputs, BATCH_SIZE, actfn, costfn);
-        net.AddDerivatives(derivs, (float)GRADIENT_MULT / BATCH_SIZE);
+        derivs = train_once(net, train_inputs, train_outputs, BATCH_SIZE, actfn, costfn, endactfn);
+        net.AddDerivatives(derivs);
         printf("%d\n", i);
     }
-    train_once(net, train_inputs, train_outputs, BATCH_SIZE, actfn, costfn);
-    std::cout << "One backtrack performed!" << std::endl;
+    
+
 }

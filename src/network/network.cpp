@@ -53,20 +53,20 @@ std::vector<float> &Network::GetOutput() {
     return end.activations;
 }
 
-void Network::RunNetwork(ActivationFunction &fn) {
+void Network::RunNetwork(ActivationFunction &fn, ActivationFunction &end_actfn) {
     hidden[0].SetActivations(start, fn);
     for (int i = 1; i < hidden.size(); ++i) {
         hidden[i].SetActivations(hidden[i - 1], fn);
     }
-    end.SetActivations(hidden[hidden.size() - 1], fn);
+    end.SetActivations(hidden[hidden.size() - 1], end_actfn);
 }
 
-void Network::BackProp(ActivationFunction &fn) {
-    end.CalcGradients(hidden[hidden.size() - 1], fn);
-    for (int i = hidden.size() - 1; i >= 0; --i) {
+void Network::BackProp(ActivationFunction &fn, ActivationFunction &end_actfn) {
+    end.CalcGradients(hidden[hidden.size() - 1], end_actfn);
+    for (int i = hidden.size() - 1; i > 0; --i) {
         hidden[i].CalcGradients(hidden[i - 1], fn);
     }
-    start.CalcGradients(hidden[0], fn);
+    hidden[0].CalcGradients(start, fn);
 }
 
 Derivatives Network::GetCurrentDerivatives() {
@@ -79,11 +79,11 @@ Derivatives Network::GetCurrentDerivatives() {
     return derivs;
 }
 
-void Network::AddDerivatives(Derivatives &derivs, float multiplier) {
-    derivs.input.SetLayerDerivatives(start, multiplier);
-    derivs.output.SetLayerDerivatives(end, multiplier);
+void Network::AddDerivatives(Derivatives &derivs) {
+    derivs.input.SetLayerDerivatives(start, gradient_mult);
+    derivs.output.SetLayerDerivatives(end, gradient_mult);
     for (int i = 0; i < num_hidden_layers; ++i) {
-        derivs.hidden[i].SetLayerDerivatives(hidden[i], multiplier);
+        derivs.hidden[i].SetLayerDerivatives(hidden[i], gradient_mult);
     }
 }
 

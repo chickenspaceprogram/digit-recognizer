@@ -30,7 +30,7 @@ std::vector<std::vector<float>> GetImages(char *images_filename) {
                 printf("i=%d, j=%d, image_size=%d\n", i, j, image_size);
                 throw "file ended early";
             }
-            image.push_back((float)next_chr / 255);
+            image.push_back(((float)next_chr / 255) * 2 - 1);
         }
         images.push_back(image);
         image.clear();
