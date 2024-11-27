@@ -1,16 +1,5 @@
 #include "network.hpp"
 
-Network::Network(Network &network) {
-    input_len = network.GetInputLen();
-    hidden_len = network.GetHiddenLen();
-    output_len = network.GetOutputLen();
-    num_hidden_layers = network.GetNumHidden();
-    gradient_mult = network.GetGradientMult();
-    start = network.start;
-    end = network.end;
-    Zero();
-}
-
 Network::Network(int input_len, int hidden_len, int output_len, int num_hidden_layers, int gradient_mult) : 
 input_len(input_len), 
 hidden_len(hidden_len),
@@ -85,7 +74,25 @@ Derivatives Network::GetCurrentDerivatives() {
     derivs.input = LayerDerivatives::GetLayerDerivatives(start);
     derivs.output = LayerDerivatives::GetLayerDerivatives(end);
     for (int i = 0; i < num_hidden_layers; ++i) {
-        //derivs.hidden.push_back();
+        derivs.hidden.push_back(LayerDerivatives::GetLayerDerivatives(hidden[i]));
+    }
+    return derivs;
+}
+
+void LayerDerivatives::operator+=(const LayerDerivatives &derivs) {
+    for (int i = 0; i < derivs.bias.size(); ++i) {
+        bias[i] += derivs.bias[i];
+    }
+    for (int i = 0; i < derivs.weight.size(); ++i) {
+        weight[i] += derivs.weight[i];
+    }
+}
+
+void Derivatives::operator+=(const Derivatives &derivs) {
+    input += derivs.input;
+    output += derivs.output;
+    for (int i = 0; i < hidden.size(); ++i) {
+        hidden[i] += derivs.hidden[i];
     }
 }
 

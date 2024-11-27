@@ -4,12 +4,14 @@
 #include <vector>
 
 struct LayerDerivatives {
+    void operator+=(const LayerDerivatives &derivs);
     static LayerDerivatives GetLayerDerivatives(const Layer &layer);
     std::vector<float> bias;
     std::vector<float> weight;
 };
 
 struct Derivatives {
+    void operator+=(const Derivatives &derivs);
     std::vector<LayerDerivatives> hidden;
     LayerDerivatives input;
     LayerDerivatives output;
@@ -17,7 +19,6 @@ struct Derivatives {
 
 class Network {
     public:
-        Network(Network &network); // not a copy constructor, just copies the network params and zeros a new network
         Network(int input_len, int hidden_len, int output_len, int num_hidden_layers, int gradient_mult);
         void Zero();
         int GetNumHidden();
