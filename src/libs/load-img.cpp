@@ -4,7 +4,7 @@ static int get_int(FILE *file);
 
 int get_int(FILE *file) {
     int val = 0;
-    for (int i = 0; i < sizeof(int) && !feof(file); ++i) {
+    for (unsigned int i = 0; (i < sizeof(int)) && !feof(file); ++i) {
         val <<= 8;
         val += fgetc(file);
     }
@@ -58,8 +58,6 @@ std::vector<std::vector<float>> GetLabels(char *labels_filename) {
     }
 
     int num_labels = get_int(fp);
-    int counter = 0;
-    char chr;
     int next_chr;
     for (int i = 0; i < num_labels; ++i) {
         if ((next_chr = getc(fp)) == EOF) {

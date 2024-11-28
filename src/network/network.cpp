@@ -113,6 +113,7 @@ LayerDerivatives LayerDerivatives::GetLayerDerivatives(Layer &layer) {
 
 void LayerDerivatives::SetLayerDerivatives(Layer &layer, float multiplier) {
     for (int i = 0; i < layer.biases_deriv.size(); ++i) {
+        //printf("%f", layer.biases[i]);
         layer.biases[i] += bias[i] * multiplier;
     }
 

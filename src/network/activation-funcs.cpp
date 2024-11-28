@@ -5,13 +5,13 @@ float ReLU::Function(float val) {
     if (val > 0) {
         return val;
     }
-    return 0;
+    return (float)0;
 }
 float ReLU::Derivative(float val) {
     if (val > 0) {
-        return 1;
+        return (float)1;
     }
-    return 0;
+    return (float)0;
 }
 
 float Sigmoid::Function(float val) {

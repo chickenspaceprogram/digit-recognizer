@@ -12,7 +12,6 @@ Derivatives train_once(Network &network, std::vector<std::vector<float>> &input,
     }
 
     int input_len = input.size();
-    int target_len = target.size();
     int rand_selection;
 
     Derivatives derivatives;

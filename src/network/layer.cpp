@@ -52,12 +52,9 @@ void Layer::CalcGradients(Layer &last_layer, ActivationFunction &fn) {
             weights_deriv[j + k * size] = biases_deriv[j] * last_layer.activations[k];
         }
     }
+    mtrx_transpose_vec_mult(&(weights[0]), &(activations_deriv[0]), &(last_layer.activations_deriv[0]), activations_deriv.size(), last_layer.activations_deriv.size());
     for (int k = 0; k < last_layer.GetSize(); ++k) {
-        temp = 0;
-        for (int j = 0; j < size; ++j) {
-            temp += biases_deriv[j] * weights_deriv[j + k * size];
-        }
-        last_layer.activations_deriv[k] = temp;
+        last_layer.activations_deriv[k] *= fn.Derivative(activations_deriv[k]);
     }
 }
 

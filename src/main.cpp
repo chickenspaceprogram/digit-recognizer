@@ -6,10 +6,10 @@
 #include "libs/load-img.hpp"
 
 
-#define NUM_HIDDEN 10
-#define HIDDEN_SIZE 16
+#define NUM_HIDDEN 3
+#define HIDDEN_SIZE 1000
 #define GRADIENT_MULT 0.01
-#define BATCH_SIZE 100
+#define BATCH_SIZE 500
 #define NUM_ITERS 10000
 
 int main(void) {
@@ -29,7 +29,7 @@ int main(void) {
         std::cout << exception << std::endl;
     }
     std::cout << "Loaded images!" << std::endl;
-    Sigmoid actfn;
+    ReLU actfn;
     Sigmoid endactfn;
     SquaredErr costfn;
 
