@@ -1,6 +1,12 @@
 #include "blas-wrapper.hpp"
 
+#define FALLBACK_BLAS
+#undef FALLBACK_BLAS // fallback BLAS is not working currently and I have bigger things to debug
+
 #ifdef FALLBACK_BLAS
+
+#include <math.h>
+#include <stdio.h>
 
 void mtrx_vec_mult_add(float *A, float *x, float *b, int input_dim, int output_dim) {
     for (int i = 0; i < input_dim; ++i) {
@@ -33,7 +39,12 @@ void mtrx_transpose_vec_mult(float *A, float *x, float *b, int input_dim, int ou
 }
 
 void vec_add(float *v1, float *v2, int size) {
+    
     for (int i = 0; i < size; ++i) {
+        printf("%f,", v2[i]);
+        if (isnan(v2[i])) {
+            exit(1);
+        }
         v1[i] += v2[i];
     }
 }
@@ -41,8 +52,9 @@ void vec_add(float *v1, float *v2, int size) {
 float vec_dot(float *v1, float *v2, int size) {
     float ans = 0;
     for (int i = 0; i < size; ++i) {
-        ans += v1[i] + v2[i]
+        ans += v1[i] + v2[i];
     }
+    return ans;
 }
 
 #else

@@ -34,9 +34,13 @@ int Layer::GetSize() const {
 
 void Layer::SetActivations(Layer& prev_layer, ActivationFunction& fn) {
     mtrx_vec_mult(&weights[0], &(prev_layer.activations[0]), &activations_no_fn[0], prev_layer.GetSize(), size);
-    vec_add(&biases[0], &activations_no_fn[0], size);
+    vec_add(&activations_no_fn[0], &biases[0], size);
     for (int i = 0; i < size; ++i) {
         activations[i] = fn.Function(activations_no_fn[i]);
+        if (isnan(activations[i])) {
+            printf("what the sigma");
+            exit(3232);
+        }
     }
 }
 

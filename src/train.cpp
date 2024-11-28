@@ -17,7 +17,7 @@ Derivatives train_once(Network &network, std::vector<std::vector<float>> &input,
 
     Derivatives derivatives;
     FILE *fp = fopen("thing.txt", "a");
-    FILE *fpout = fopen("outvals.txt", "a");
+    //FILE *fpout = fopen("outvals.txt", "a");
 
     for (int i = 0; i < num_inputs; ++i) {
         rand_selection = randint(0, input_len);
@@ -29,10 +29,10 @@ Derivatives train_once(Network &network, std::vector<std::vector<float>> &input,
         //    fprintf(fpout, "%f,", j);
         //}
         //fputc('\n', fpout);
-        for (int j = 0; j < network.GetOutput().size(); ++j) {
+        /*for (int j = 0; j < network.GetOutput().size(); ++j) {
             fprintf(fpout, "(%f,%f),", network.GetOutput()[j], target[i][j]);
         }
-        fputc('\n', fpout);
+        fputc('\n', fpout);*/
         network.BackProp(act_fn, end_activation_fn);
         if (i == 0) {
             derivatives = network.GetCurrentDerivatives();
@@ -41,9 +41,9 @@ Derivatives train_once(Network &network, std::vector<std::vector<float>> &input,
         derivatives += network.GetCurrentDerivatives();
     }
     fputc('\n', fp);
-    fputc('\n', fpout);
+    //fputc('\n', fpout);
     fclose(fp);
-    fclose(fpout);
+    //fclose(fpout);
     return derivatives;
 }
 

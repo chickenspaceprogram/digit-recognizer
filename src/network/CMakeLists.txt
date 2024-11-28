@@ -12,3 +12,5 @@ set(NETWORK_SRCS
     network.cpp
 )
 add_library(network ${NETWORK_SRCS})
+
+target_link_libraries(network libs)
