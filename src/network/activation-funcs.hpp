@@ -31,4 +31,9 @@ class LeakyReLU : public ActivationFunction {
     virtual float Derivative(float input);
 };
 
+class ReLU6 : public ActivationFunction {
+    virtual float Function(float input);
+    virtual float Derivative(float input);
+};
+
 #endif

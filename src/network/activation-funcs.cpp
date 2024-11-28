@@ -47,3 +47,19 @@ float LeakyReLU::Derivative(float val) {
     }
     return LEAKY_RELU_ALPHA;
 }
+
+float ReLU6::Function(float val) {
+    if (val <= 0) {
+        return 0;
+    }
+    else if (val >= 6) {
+        return 6;
+    }
+    return val;
+}
+float ReLU6::Derivative(float val) {
+    if (val > 0 || val < 6) {
+        return 1;
+    }
+    return 0;
+}

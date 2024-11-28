@@ -1,5 +1,7 @@
 #include <vector>
 #include <iostream>
+#include <fenv.h>
+#pragma STDC FENV_ACCESS ON
 #include "libs/rand.hpp"
 #include "train.hpp"
 #include "libs/load-img.hpp"
@@ -13,6 +15,9 @@
 
 int main(void) {
     seed_rand();
+    fexcept_t flags;
+    fegetexceptflag(&flags, FE_ALL_EXCEPT);
+    fesetexceptflag(&flags, FE_ALL_EXCEPT);
     std::cout << "Starting..." << std::endl;
     std::vector<std::vector<float>> train_inputs;
     std::vector<std::vector<float>> train_outputs;
@@ -28,8 +33,8 @@ int main(void) {
         std::cout << exception << std::endl;
     }
     std::cout << "Loaded images!" << std::endl;
-    ReLU actfn;
-    ReLU endactfn;
+    ReLU6 actfn;
+    ReLU6 endactfn;
     SquaredErr costfn;
 
     Network net(train_inputs[0].size(), HIDDEN_SIZE, train_outputs[0].size(), NUM_HIDDEN, GRADIENT_MULT / BATCH_SIZE);
