@@ -32,6 +32,8 @@ void mtrx_transpose_vec_mult(float *A, float *x, float *b, int input_dim, int ou
 
 float vec_dot(float *v1, float *v2, int size);
 
+void vec_cpy(float *v1, float *v2, int size);
+
 }
 
 #endif

@@ -5,7 +5,7 @@ float SquaredErr::Function(std::vector<float> &output, std::vector<float> &targe
     if (output.size() != target.size()) {
         throw NOT_SAME_LEN;
     }
-    for (int i = 0; i < output.size(); ++i) {
+    for (unsigned int i = 0; i < output.size(); ++i) {
         err += 0.5 * (target[i] - output[i]) * (target[i] - output[i]);
     }
     return err;
@@ -16,7 +16,7 @@ std::vector<float> SquaredErr::Derivative(std::vector<float> &output, std::vecto
     if (output.size() != target.size()) {
         throw NOT_SAME_LEN;
     }
-    for (int i = 0; i < output.size(); ++i) {
+    for (unsigned int i = 0; i < output.size(); ++i) {
         out.push_back(target[i] - output[i]);
     }
     return out;

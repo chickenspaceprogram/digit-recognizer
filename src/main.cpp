@@ -9,7 +9,7 @@
 #define NUM_HIDDEN 3
 #define HIDDEN_SIZE 1000
 #define GRADIENT_MULT 0.01
-#define BATCH_SIZE 500
+#define BATCH_SIZE 100
 #define NUM_ITERS 10000
 
 int main(void) {

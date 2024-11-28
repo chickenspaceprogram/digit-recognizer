@@ -78,4 +78,8 @@ void vec_add(float *v1, float *v2, int size) {
 float vec_dot(float *v1, float *v2, int size) {
     return cblas_sdot(size, v1, 1, v2, 1);
 }
+
+void vec_cpy(float *v1, float *v2, int size) {
+    cblas_scopy(size, v1, 1, v2, 1);
+}
 #endif

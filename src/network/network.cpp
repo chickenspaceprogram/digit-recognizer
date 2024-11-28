@@ -21,7 +21,7 @@ end(output_len, hidden_len) {
 void Network::Zero() {
     start.Zero();
     end.Zero();
-    for (int i = 0; i < hidden.size(); ++i) {
+    for (unsigned int i = 0; i < hidden.size(); ++i) {
         hidden[i].Zero();
     }
 }
@@ -55,7 +55,7 @@ std::vector<float> &Network::GetOutput() {
 
 void Network::RunNetwork(ActivationFunction &fn, ActivationFunction &end_actfn) {
     hidden[0].SetActivations(start, fn);
-    for (int i = 1; i < hidden.size(); ++i) {
+    for (unsigned int i = 1; i < hidden.size(); ++i) {
         hidden[i].SetActivations(hidden[i - 1], fn);
     }
     end.SetActivations(hidden[hidden.size() - 1], end_actfn);
@@ -88,10 +88,10 @@ void Network::AddDerivatives(Derivatives &derivs) {
 }
 
 void LayerDerivatives::operator+=(LayerDerivatives const &derivs) {
-    for (int i = 0; i < derivs.bias.size(); ++i) {
+    for (unsigned int i = 0; i < derivs.bias.size(); ++i) {
         bias[i] += derivs.bias[i];
     }
-    for (int i = 0; i < derivs.weight.size(); ++i) {
+    for (unsigned int i = 0; i < derivs.weight.size(); ++i) {
         weight[i] += derivs.weight[i];
     }
 }
@@ -99,25 +99,25 @@ void LayerDerivatives::operator+=(LayerDerivatives const &derivs) {
 void Derivatives::operator+=(Derivatives const &derivs) {
     input += derivs.input;
     output += derivs.output;
-    for (int i = 0; i < hidden.size(); ++i) {
+    for (unsigned int i = 0; i < hidden.size(); ++i) {
         hidden[i] += derivs.hidden[i];
     }
 }
 
 LayerDerivatives LayerDerivatives::GetLayerDerivatives(Layer &layer) {
     LayerDerivatives lderivs;
-    lderivs.bias = layer.biases_deriv;
+    lderivs.bias = layer.activations_deriv;
     lderivs.weight = layer.weights_deriv;
     return lderivs;
 }
 
 void LayerDerivatives::SetLayerDerivatives(Layer &layer, float multiplier) {
-    for (int i = 0; i < layer.biases_deriv.size(); ++i) {
+    for (unsigned int i = 0; i < layer.activations_deriv.size(); ++i) {
         //printf("%f", layer.biases[i]);
         layer.biases[i] += bias[i] * multiplier;
     }
 
-    for (int i = 0; i < layer.weights_deriv.size(); ++i) {
+    for (unsigned int i = 0; i < layer.weights_deriv.size(); ++i) {
         layer.weights[i] += weight[i] * multiplier;
     }
 }

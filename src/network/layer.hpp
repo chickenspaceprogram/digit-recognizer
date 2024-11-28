@@ -19,7 +19,6 @@ class Layer {
         std::vector<float> weights_deriv;
 
         std::vector<float> biases;
-        std::vector<float> biases_deriv;
 
         std::vector<float> activations;
         std::vector<float> activations_deriv;
