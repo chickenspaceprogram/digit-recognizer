@@ -10,7 +10,7 @@
 
 class Layer {
     public:
-        Layer(int size, int previous_size);
+        Layer(int size, int previous_size, float activation_multiplier);
         void SetActivations(Layer& prev_layer, ActivationFunction& fn);
         void CalcGradients(Layer &last_layer, ActivationFunction& fn);
         void Zero();

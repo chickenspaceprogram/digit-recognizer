@@ -1,7 +1,7 @@
 #include "layer.hpp"
 
 
-Layer::Layer(int size, int previous_size) : 
+Layer::Layer(int size, int previous_size, float activation_multiplier) : 
     size(size),
     prev_size(previous_size)
 {
@@ -13,7 +13,7 @@ Layer::Layer(int size, int previous_size) :
     activations_no_fn.reserve(size);
     
     for (int i = 0; i < size * previous_size; ++i) {
-        weights.push_back(rand_weight());
+        weights.push_back(rand_weight(activation_multiplier));
         weights_deriv.push_back((float)0);
     }
     for (int i = 0; i < size; ++i) {

@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <vector>
 
-std::vector<std::vector<float>> GetImages(char *images_filename);
+std::vector<std::vector<float>> GetImages(char *images_filename, float img_variance);
 std::vector<std::vector<float>> GetLabels(char *labels_filename);
 
 #endif

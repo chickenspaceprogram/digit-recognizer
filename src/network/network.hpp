@@ -21,7 +21,7 @@ struct Derivatives {
 class Network {
     public:
         Network() = delete;
-        Network(int input_len, int hidden_len, int output_len, int num_hidden_layers, float gradient_mult);
+        Network(int input_len, int hidden_len, int output_len, int num_hidden_layers, float gradient_mult, float activation_multiplier);
         void Zero();
         int GetNumHidden();
         int GetHiddenLen();

@@ -11,7 +11,7 @@ int get_int(FILE *file) {
     return val;
 }
 
-std::vector<std::vector<float>> GetImages(char *images_filename) {
+std::vector<std::vector<float>> GetImages(char *images_filename, float img_variance) {
     std::vector<std::vector<float>> images;
     std::vector<float> image;
     FILE *fp = fopen(images_filename, "rb");
@@ -30,7 +30,7 @@ std::vector<std::vector<float>> GetImages(char *images_filename) {
                 printf("i=%d, j=%d, image_size=%d\n", i, j, image_size);
                 throw "file ended early";
             }
-            image.push_back(((float)next_chr / 255) * 2 - 1);
+            image.push_back((((float)next_chr / 255)/* * 2 - 1*/) * img_variance);
         }
         images.push_back(image);
         image.clear();

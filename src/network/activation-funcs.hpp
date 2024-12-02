@@ -2,6 +2,7 @@
 #define ACTIVATION_FUNCS_HPP
 
 #include <math.h>
+#include <vector>
 
 #define LEAKY_RELU_ALPHA 0.01
 #define ELU_ALPHA 1
@@ -34,6 +35,11 @@ class LeakyReLU : public ActivationFunction {
 class ReLU6 : public ActivationFunction {
     virtual float Function(float input);
     virtual float Derivative(float input);
+};
+
+struct ClassificationFunction {
+    virtual void Function(std::vector<float> &input, std::vector<float> &output);
+    virtual void Derivative(std::vector<float> &input, std::vector<float> &output);
 };
 
 #endif
