@@ -6,13 +6,13 @@
 #include "libs/load-img.hpp"
 
 
-#define NUM_HIDDEN 2
-#define HIDDEN_SIZE 16
-#define GRADIENT_MULT 0.05
+#define NUM_HIDDEN 1
+#define HIDDEN_SIZE 10
+#define GRADIENT_MULT 0.1
 #define BATCH_SIZE 100
-#define NUM_ITERS 10000
+#define NUM_ITERS 1000
 #define IMG_VARIANCE 1
-#define ACTIVATION_MULTIPLIER 0.01
+#define ACTIVATION_MULTIPLIER 0.5
 
 int main(void) {
     seed_rand();
@@ -33,7 +33,7 @@ int main(void) {
     std::cout << "Loaded images!" << std::endl;
     Sigmoid actfn;
     Sigmoid endactfn;
-    SquaredErr costfn;
+    CrossEntropy costfn;
 
     Network net(train_inputs[0].size(), HIDDEN_SIZE, train_outputs[0].size(), NUM_HIDDEN, GRADIENT_MULT / BATCH_SIZE, ACTIVATION_MULTIPLIER);
     std::cout << "Network initialized!" << std::endl;

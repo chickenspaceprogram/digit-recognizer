@@ -4,13 +4,19 @@
 #define NOT_SAME_LEN 1
 
 #include <vector>
+#include <math.h>
 
 struct CostFunction {
-        virtual float Function(std::vector<float> &output, std::vector<float> &target) = 0;
-        virtual std::vector<float> Derivative(std::vector<float> &output, std::vector<float> &target) = 0;
+    virtual float Function(std::vector<float> &output, std::vector<float> &target) = 0;
+    virtual std::vector<float> Derivative(std::vector<float> &output, std::vector<float> &target) = 0;
 };
 
 struct SquaredErr : public CostFunction {
+    virtual float Function(std::vector<float> &output, std::vector<float> &target);
+    virtual std::vector<float> Derivative(std::vector<float> &output, std::vector<float> &target);
+};
+
+struct CrossEntropy : public CostFunction {
     virtual float Function(std::vector<float> &output, std::vector<float> &target);
     virtual std::vector<float> Derivative(std::vector<float> &output, std::vector<float> &target);
 };

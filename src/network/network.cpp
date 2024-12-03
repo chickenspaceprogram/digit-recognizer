@@ -47,7 +47,7 @@ void Network::SetInput(std::vector<float> inputs) {
     start.activations = inputs;
 }
 void Network::SetOutputDeriv(std::vector<float> outputs) {
-    end.activations_deriv = outputs;
+    end.activations_deriv(outputs);
 }
 std::vector<float> &Network::GetOutput() {
     return end.activations;
