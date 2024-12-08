@@ -10,9 +10,9 @@
 
 #define NUM_HIDDEN 1
 #define HIDDEN_SIZE 10
-#define GRADIENT_MULT 0.07
-#define BATCH_SIZE 1000
-#define NUM_ITERS 5000
+#define GRADIENT_MULT 0.05
+#define BATCH_SIZE 500
+#define NUM_ITERS 20000
 #define IMG_VARIANCE 1
 #define ACTIVATION_MULTIPLIER 0.5
 
@@ -47,7 +47,7 @@ int main(void) {
     "Hidden layers: %d\n"
     "Hidden layer size: %d\n"
     "Learning rate: %.2lf\n"
-    "Batch size:%d\n"
+    "Batch size: %d\n"
     "Total number of iterations: %d\n"
     "Variance in input images: %.2lf\n"
     "Neuron initial activation mulitpler: %.4lf\n\n\n",

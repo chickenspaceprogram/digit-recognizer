@@ -67,7 +67,7 @@ Derivatives Network::GetCurrentDerivatives() {
     Derivatives derivs;
     derivs.output = LayerDerivatives::GetLayerDerivatives(end, hidden[num_hidden_layers - 1]);
     derivs.hidden.push_back(LayerDerivatives::GetLayerDerivatives(hidden[0], start));
-    for (int i = 1; i < num_hidden_layers - 1; ++i) {
+    for (int i = 1; i < num_hidden_layers; ++i) {
         derivs.hidden.push_back(LayerDerivatives::GetLayerDerivatives(hidden[i], hidden[i - 1]));
     }
     return derivs;
