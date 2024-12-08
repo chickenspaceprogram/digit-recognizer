@@ -42,28 +42,11 @@ int main(void) {
     Derivatives derivs;
     FILE *fp = fopen("out.txt", "w");
     assert(fp != NULL);
-    fprintf(fp, 
-    "Network parameters:\n"
-    "Hidden layers: %d\n"
-    "Hidden layer size: %d\n"
-    "Learning rate: %.2lf\n"
-    "Batch size: %d\n"
-    "Total number of iterations: %d\n"
-    "Variance in input images: %.2lf\n"
-    "Neuron initial activation mulitpler: %.4lf\n\n\n",
-    NUM_HIDDEN,
-    HIDDEN_SIZE,
-    GRADIENT_MULT,
-    BATCH_SIZE,
-    NUM_ITERS,
-    (double)IMG_VARIANCE,
-    ACTIVATION_MULTIPLIER
-    );
 
     for (int i = 0; i < NUM_ITERS; ++i) {
         derivs = train_once(net, train_inputs, train_outputs, BATCH_SIZE, actfn, costfn, endactfn);
         net.AddDerivatives(derivs);
-        fprintf(fp, "Iteration %d: %.2lf %%\n", i, ((double)get_successes(net, test_inputs, test_outputs, actfn, endactfn) / 100));
+        fprintf(fp,"%d,", get_successes(net, test_inputs, test_outputs, actfn, endactfn));
     }
     
 

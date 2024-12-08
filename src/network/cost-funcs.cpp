@@ -10,8 +10,6 @@ float SquaredErr::Function(std::vector<float> &output, std::vector<float> &targe
     }
     for (unsigned int i = 0; i < output.size(); ++i) {
         err += 0.5 * (target[i] - output[i]) * (target[i] - output[i]);
-        assert(!isnan(err));
-        assert(!isinf(err));
     }
     return err;
 }
@@ -23,8 +21,6 @@ std::vector<float> SquaredErr::Derivative(std::vector<float> &output, std::vecto
     }
     for (unsigned int i = 0; i < output.size(); ++i) {
         out.push_back(target[i] - output[i]);
-        assert(!isnan(target[i] - output[i]));
-        assert(!isinf(target[i] - output[i]));
     }
     return out;
 }
@@ -33,8 +29,6 @@ float CrossEntropy::Function(std::vector<float> &output, std::vector<float> &tar
     float sum = 0;
     for (int i = 0; i < target.size(); ++i) {
         sum += target[i] * log(output[i] + NO_ERR_CONST) + (1 - target[i]) * log(1 - output[i] + NO_ERR_CONST);
-        assert(!isnan(sum));
-        assert(!isinf(sum));
     }
     return -sum;
 }
@@ -43,8 +37,6 @@ std::vector<float> CrossEntropy::Derivative(std::vector<float> &output, std::vec
     std::vector<float> out;
     for (int i = 0; i < target.size(); ++i) {
         out.push_back(target[i] / (output[i] + NO_ERR_CONST) - (1 - target[i]) / (1 - output[i] + NO_ERR_CONST));
-        assert(!isnan(target[i] / output[i] - (1 - target[i]) / (1 - output[i])));
-        assert(!isinf(target[i] / output[i] - (1 - target[i]) / (1 - output[i])));
     }
     return out;
 }
