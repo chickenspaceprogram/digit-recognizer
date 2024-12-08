@@ -38,6 +38,8 @@ add_executable(digit-recognizer
     ../src/main.cpp
     ../src/train.cpp
     ../src/train.hpp
+    ../src/test-net.hpp
+    ../src/test-net.cpp
 )
 
 if (BLAS_FOUND)

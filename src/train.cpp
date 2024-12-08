@@ -27,7 +27,6 @@ Derivatives train_once(Network &network, std::vector<std::vector<float>> &input,
         
         
         costs.push_back(cost_fn.Function(network.GetOutput(), target[rand_selection]));
-
         //for (float j : cost_fn.Derivative(network.GetOutput(), target[i])) {
         //    fprintf(fpout, "%f,", j);
         //}

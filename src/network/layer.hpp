@@ -1,5 +1,5 @@
-#ifndef NET_HPP
-#define NET_HPP
+#ifndef LAYER_HPP
+#define LAYER_HPP
 
 #include <stdlib.h>
 #include <stdbool.h>
