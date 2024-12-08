@@ -18,14 +18,6 @@ end(output_len, hidden_len, activation_multiplier) {
     }
 }
 
-void Network::Zero() {
-    start.Zero();
-    end.Zero();
-    for (unsigned int i = 0; i < hidden.size(); ++i) {
-        hidden[i].Zero();
-    }
-}
-
 int Network::GetNumHidden() {
     return num_hidden_layers;
 }
@@ -47,7 +39,7 @@ void Network::SetInput(std::vector<float> inputs) {
     start.activations = inputs;
 }
 void Network::SetOutputDeriv(std::vector<float> outputs) {
-    end.activations_deriv(outputs);
+    end.error = outputs;
 }
 std::vector<float> &Network::GetOutput() {
     return end.activations;
@@ -62,25 +54,24 @@ void Network::RunNetwork(ActivationFunction &fn, ActivationFunction &end_actfn) 
 }
 
 void Network::BackProp(ActivationFunction &fn, ActivationFunction &end_actfn) {
-    end.CalcGradients(hidden[hidden.size() - 1], end_actfn);
+    end.CalcError(hidden[hidden.size() - 1], end_actfn);
     for (int i = hidden.size() - 1; i > 0; --i) {
-        hidden[i].CalcGradients(hidden[i - 1], fn);
+        hidden[i].CalcError(hidden[i - 1], fn);
     }
-    hidden[0].CalcGradients(start, fn);
+    hidden[0].CalcError(start, fn);
 }
 
 Derivatives Network::GetCurrentDerivatives() {
     Derivatives derivs;
-    derivs.input = LayerDerivatives::GetLayerDerivatives(start);
-    derivs.output = LayerDerivatives::GetLayerDerivatives(end);
-    for (int i = 0; i < num_hidden_layers; ++i) {
-        derivs.hidden.push_back(LayerDerivatives::GetLayerDerivatives(hidden[i]));
+    derivs.output = LayerDerivatives::GetLayerDerivatives(end, hidden[num_hidden_layers]);
+    derivs.hidden.push_back(LayerDerivatives::GetLayerDerivatives(hidden[0], start));
+    for (int i = 1; i < num_hidden_layers; ++i) {
+        derivs.hidden.push_back(LayerDerivatives::GetLayerDerivatives(hidden[i], hidden[i - 1]));
     }
     return derivs;
 }
 
 void Network::AddDerivatives(Derivatives &derivs) {
-    derivs.input.SetLayerDerivatives(start, gradient_mult);
     derivs.output.SetLayerDerivatives(end, gradient_mult);
     for (int i = 0; i < num_hidden_layers; ++i) {
         derivs.hidden[i].SetLayerDerivatives(hidden[i], gradient_mult);
@@ -97,27 +88,25 @@ void LayerDerivatives::operator+=(LayerDerivatives const &derivs) {
 }
 
 void Derivatives::operator+=(Derivatives const &derivs) {
-    input += derivs.input;
     output += derivs.output;
     for (unsigned int i = 0; i < hidden.size(); ++i) {
         hidden[i] += derivs.hidden[i];
     }
 }
 
-LayerDerivatives LayerDerivatives::GetLayerDerivatives(Layer &layer) {
+LayerDerivatives LayerDerivatives::GetLayerDerivatives(Layer &layer, Layer &last_layer) {
     LayerDerivatives lderivs;
-    lderivs.bias = layer.activations_deriv;
-    lderivs.weight = layer.weights_deriv;
+    lderivs.bias = layer.GetBiasesDeriv(last_layer);
+    lderivs.weight = layer.GetWeightsDeriv(last_layer);
     return lderivs;
 }
 
 void LayerDerivatives::SetLayerDerivatives(Layer &layer, float multiplier) {
-    for (unsigned int i = 0; i < layer.activations_deriv.size(); ++i) {
-        //printf("%f", layer.biases[i]);
+    for (unsigned int i = 0; i < layer.biases.size(); ++i) {
         layer.biases[i] += bias[i] * multiplier;
     }
 
-    for (unsigned int i = 0; i < layer.weights_deriv.size(); ++i) {
+    for (unsigned int i = 0; i < layer.weights.size(); ++i) {
         layer.weights[i] += weight[i] * multiplier;
     }
 }

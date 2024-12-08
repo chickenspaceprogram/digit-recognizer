@@ -12,16 +12,15 @@ class Layer {
     public:
         Layer(int size, int previous_size, float activation_multiplier);
         void SetActivations(Layer& prev_layer, ActivationFunction& fn);
-        void CalcGradients(Layer &last_layer, ActivationFunction& fn);
-        void Zero();
+        void CalcError(Layer &last_layer, ActivationFunction& fn);
+        std::vector<float> GetWeightsDeriv(Layer &last);
+        std::vector<float> GetBiasesDeriv(Layer &last);
         int GetSize() const;
+        // yeah i know public fields suck
         std::vector<float> weights;
-        std::vector<float> weights_deriv;
-
         std::vector<float> biases;
-
         std::vector<float> activations;
-        std::vector<float> activations_deriv;
+        std::vector<float> error;
 
     private:
         int size;

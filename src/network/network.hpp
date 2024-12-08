@@ -5,7 +5,7 @@
 
 struct LayerDerivatives {
     void operator+=(LayerDerivatives const &derivs);
-    static LayerDerivatives GetLayerDerivatives(Layer &layer);
+    static LayerDerivatives GetLayerDerivatives(Layer &layer, Layer &last_layer);
     void SetLayerDerivatives(Layer &layer, float multiplier);
     std::vector<float> bias;
     std::vector<float> weight;
@@ -14,7 +14,6 @@ struct LayerDerivatives {
 struct Derivatives {
     void operator+=(Derivatives const &derivs);
     std::vector<LayerDerivatives> hidden;
-    LayerDerivatives input;
     LayerDerivatives output;
 };
 

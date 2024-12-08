@@ -3,3 +3,4 @@ debug/**
 !CMakeLists.txt
 .DS_Store
 .vscode
+thing.txt
