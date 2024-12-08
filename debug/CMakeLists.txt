@@ -31,7 +31,7 @@ endif ()
 
 
 
-
+enable_testing()
 add_subdirectory(../src/libs ./libs)
 add_subdirectory(../src/network ./network)
 
