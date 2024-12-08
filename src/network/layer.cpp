@@ -55,7 +55,7 @@ std::vector<float> Layer::GetWeightsDeriv(Layer &last) {
     return out;
 }
 
-std::vector<float> Layer::GetBiasesDeriv(Layer &last) {
+std::vector<float> Layer::GetBiasesDeriv(void) {
 
     return error;
 }

@@ -38,9 +38,11 @@ float Network::GetGradientMult() {
 void Network::SetInput(std::vector<float> inputs) {
     start.activations = inputs;
 }
+
 void Network::SetOutputDeriv(std::vector<float> outputs) {
     end.error = outputs;
 }
+
 std::vector<float> &Network::GetOutput() {
     return end.activations;
 }
@@ -63,9 +65,9 @@ void Network::BackProp(ActivationFunction &fn, ActivationFunction &end_actfn) {
 
 Derivatives Network::GetCurrentDerivatives() {
     Derivatives derivs;
-    derivs.output = LayerDerivatives::GetLayerDerivatives(end, hidden[num_hidden_layers]);
+    derivs.output = LayerDerivatives::GetLayerDerivatives(end, hidden[num_hidden_layers - 1]);
     derivs.hidden.push_back(LayerDerivatives::GetLayerDerivatives(hidden[0], start));
-    for (int i = 1; i < num_hidden_layers; ++i) {
+    for (int i = 1; i < num_hidden_layers - 1; ++i) {
         derivs.hidden.push_back(LayerDerivatives::GetLayerDerivatives(hidden[i], hidden[i - 1]));
     }
     return derivs;
@@ -96,7 +98,7 @@ void Derivatives::operator+=(Derivatives const &derivs) {
 
 LayerDerivatives LayerDerivatives::GetLayerDerivatives(Layer &layer, Layer &last_layer) {
     LayerDerivatives lderivs;
-    lderivs.bias = layer.GetBiasesDeriv(last_layer);
+    lderivs.bias = layer.GetBiasesDeriv();
     lderivs.weight = layer.GetWeightsDeriv(last_layer);
     return lderivs;
 }

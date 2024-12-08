@@ -14,7 +14,7 @@ class Layer {
         void SetActivations(Layer& prev_layer, ActivationFunction& fn);
         void CalcError(Layer &last_layer, ActivationFunction& fn);
         std::vector<float> GetWeightsDeriv(Layer &last);
-        std::vector<float> GetBiasesDeriv(Layer &last);
+        std::vector<float> GetBiasesDeriv(void);
         int GetSize() const;
         // yeah i know public fields suck
         std::vector<float> weights;
