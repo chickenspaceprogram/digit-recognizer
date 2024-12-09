@@ -28,24 +28,12 @@ You can then run the executable generated with `./digit-recognizer` (or by doubl
 
 ### Windows
 
-To compile this project, you will need to install the following: 
+Building this project on Windows is currently not supported, as I don't have the time to figure out how to install OpenBLAS and link it on Windows.
 
-- [Microsoft Visual Studio](https://visualstudio.microsoft.com/)
-    - Ensure that you select "Desktop Development with C++" in the Visual Studio Installer.
-
+It shouldn't be that hard to do, so if someone wants to make a PR adding support for Windows builds please let me know!
 
 ### Linux
 
 You will need to install OpenBLAS through your package manager. Instructions for doing this are [here](https://github.com/OpenMathLib/OpenBLAS/wiki/Precompiled-installation-packages).
 
 This project has only been tested on Fedora. You may or may not have to alter the build system a bit to get it to compile on other distributions, since other distributions may put OpenBLAS in different places.
-
-#### Fallback BLAS
-
-Included in this project is a fallback version of BLAS. This version is likely much slower than the actual BLAS, but if you encounter errors when installing BLAS or building the project, you should try using the fallback version.
-
-To use the fallback version, remove the lines in `src/libs/blas-wrapper.h` and `build/CMakeLists.txt` marked with the following text:
-
-`##### remove this line to use the fallback version of BLAS #####`
-
-If you use the fallback version of BLAS, you do not need to install BLAS.
