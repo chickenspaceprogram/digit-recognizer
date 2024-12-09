@@ -102,7 +102,34 @@ These libraries are code written by other people that take advantage of various 
 
 \section{Figures}
 
+\begin{center}
+    \begin{figure}[h!]
+        \caption{
+            This graph shows the number of images out of the 10000-image set of test cases that the neural network recognized correctly.
+            As the number of iterations increases, the network is able to recognize more and more images correctly from the test set.
+            The network is not perfect, and tends to plateau at getting roughly 90\% of the images correct with these parameters. 
+            I think that with some tweaking to the parameters used and with using a more-annoying-to-implement but better cost function, this number could be brought higher.
+            As well, I suspect that there are a few lingering bugs in my code potentially reducing the network's efficiency, however I did not have time to search for and fix these.
+            \smallskip
+        }
+        \centering
+        \includegraphics[scale=0.9]{test-2layer-10node-act0.3-2/network.png}
 
+        Parameters used:
+        \medskip
+        \begin{itemize}
+            \itemsep0em 
+            \item 2 hidden layers
+            \item 10 nodes in hidden layers
+            \item Learning rate: 0.1
+            \item Batch size: 500
+            \item Image activations normalized to values from 0 to 1
+            \item Network weights initialized to random numbers from -0.3 to 0.3
+            \item Network biases initialized to 0 
+        \end{itemize}
+        \centering
+    \end{figure}
+\end{center}
 
 \section{Glossary}
 

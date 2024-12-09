@@ -9,7 +9,7 @@
 
 
 #define NUM_HIDDEN 2
-#define HIDDEN_SIZE 16
+#define HIDDEN_SIZE 10
 #define GRADIENT_MULT 0.1
 #define BATCH_SIZE 500
 #define NUM_ITERS 20000
