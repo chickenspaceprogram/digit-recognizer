@@ -5,17 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 
-if (${WIN32})   ##### remove this line to use the fallback version of BLAS #####
-
-set (FALLBACK_BLAS true)
-
-endif ()        ##### remove this line to use the fallback version of BLAS #####
-
-if (FALLBACK_BLAS)
-
-set (BLAS_FOUND true)
-
-elseif (${APPLE})
+if (${APPLE})
 
 # using Apple's version of BLAS
 set (CMAKE_CXX_FLAGS "-DACCELERATE_NEW_LAPACK")
@@ -39,6 +29,8 @@ add_executable(digit-recognizer
     ../src/main.cpp
     ../src/train.cpp
     ../src/train.hpp
+    ../src/test-net.hpp
+    ../src/test-net.cpp
 )
 
 if (BLAS_FOUND)
