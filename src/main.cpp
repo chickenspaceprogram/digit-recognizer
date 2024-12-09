@@ -8,13 +8,13 @@
 #include "test-net.hpp"
 
 
-#define NUM_HIDDEN 1
-#define HIDDEN_SIZE 10
-#define GRADIENT_MULT 0.05
+#define NUM_HIDDEN 2
+#define HIDDEN_SIZE 16
+#define GRADIENT_MULT 0.1
 #define BATCH_SIZE 500
 #define NUM_ITERS 20000
 #define IMG_VARIANCE 1
-#define ACTIVATION_MULTIPLIER 0.5
+#define ACTIVATION_MULTIPLIER 0.3
 
 int main(void) {
     seed_rand();
