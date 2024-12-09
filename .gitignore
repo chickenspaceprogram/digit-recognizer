@@ -4,3 +4,4 @@ debug/**
 .DS_Store
 .vscode
 thing.txt
+out/

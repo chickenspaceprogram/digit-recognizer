@@ -1,14 +1,11 @@
 #ifndef BLAS_WRAPPER_HPP
 #define BLAS_WRAPPER_HPP
 
-/*  ##### remove this line to use the fallback version of BLAS #####
-#define FALLBACK_BLAS
-    ##### remove this line to use the fallback version of BLAS ##### */
 
 #if defined(__APPLE__) && defined(__MACH__)
 #include <Accelerate/Accelerate.h>
 #elif defined(_WIN32)
-#define FALLBACK_BLAS
+#error Sorry, Windows builds are not currently supported. Please try building on MacOS or Linux.
 #else
 extern "C" {
 #include <openblas/cblas.h>
