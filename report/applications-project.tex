@@ -18,19 +18,18 @@
 \maketitle
 
 \textbf{Bolded} terms are defined in the Glossary at the end.
+If you are only interested in the linear algebra of this project, skip to section 2.
 
-\section{Creating a Neural Network}
+\section{Design Decisions}
 
-\subsection{Design Decisions}
-
-\subsubsection{Overview}
+\subsection{Overview}
 
 My project involved creating a Neural Network to recognize handwritten digits.
 My code is available under the MIT License at \verb|https://github.com/chickenspaceprogram/digit-recognizer|.
 Windows builds are currently not supported, although it is possible that they will be in future when I get more time.
 It should be functioning on MacOS and Linux (although for Linux it is possible you may have to configure a few things; if building fails, email me with the distribution you're using and I can help troubleshoot).
 
-\subsubsection{Programming Languages and General Philosophy}
+\subsection{Programming Language Selection and General Philosophy}
 
 I opted to not use any external machine learning libraries, as I wanted to gain as much experience with the algorithms and math behind neural networks as possible.
 However, I did use the \textbf{BLAS library} to handle things like matrix-vector multiplication, dot products, and vector addition.
@@ -38,11 +37,10 @@ Everything else was coded manually.
 
 I chose to code this project in C++.
 I opted to use C++ rather than C, as it seemed sensible to represent the layers of the neural network and the network itself as objects.
-While objects can be represented in C, the methods of doing this (function pointers) prevent certain compiler optimizations and have awkward syntax.
 I opted for C++ over something like Fortran as I have more experience in C-style languages and was running low on time.
 C++ is also likely to run faster than something like Java or Python.
 
-\subsubsection{Structure}
+\subsection{Structure}
 
 This program is structured in several parts. 
 First, there are the library functions I created.
@@ -62,8 +60,9 @@ The \verb|mnist-dataset/| directory contains the images from the MNIST dataset.
 \section{Algorithm}
 
 Neural networks are composed of many layers, each composed of nodes.
-The first layer is called the input layer, and it contains nodes representing the input data.
-The last layer is called the output layer, and it contains nodes representing the network's output.
+The first layer is called the input layer, and it contains nodes with activations representing the input data.
+The last layer is called the output layer, and it contains nodes with activations representing the network's output.
+The layers in between the input and output are called hidden layers.
 Each node has an activation, which is a scalar value describing how strongly the input activated it.
 This means that each layer can be written as a vector containing each node's activation.
 
@@ -74,6 +73,7 @@ a_j^i = f\left(b_j^i + \sum_{k = 1}^{m} a_k^{i-1} \cdot w_{jk}^i\right)
 \]
 
 where $b_j^i$ is a scalar bias added to the $j$th node in the $i$th layer, $a_k^{i-1}$ is the $k$th node in the $i-1$th layer, $w_{jk}^i$ is the weight between node $a_k^{i-1}$ and node $a_j^i$, and $f$ is some nonlinear \textbf{activation function}.
+The goal of a neural network is to tune the weights and biases of all the nodes to produce a desired output.
 This can be rewritten as follows:
 
 \[
@@ -83,8 +83,11 @@ This can be rewritten as follows:
 where $\bi{a}^i$ is a vector containing the activations of layer $i$, $f$ is a function that returns a vector and applies the activation function to every element of its input, $\bi{b}^i$ is a vector containing the biases of layer $i$, $W^i$ is a matrix containing the weights from layer $i - 1$ to $i$, and $\bi{a}^{i-1}$ is the activations of layer $i - 1$.
 
 Calculating how to adjust the weights and biases of a network to produce a desired output is the job of the backpropagation algorithm.
+Very roughly, a ``cost function'' is used to assign a scalar value to the amount that the output layer differs from the desired output.
+Then, the gradient of this cost function with respect to all the weights and biases of the network is determined, and this gradient is used to adjust these weights and biases in the correct direction to make the cost function's value decrease.
+
 A full explanation of that algorithm is outside the scope of this discussion as it is at best tangential to the usage of linear algebra in this project.
-However, it will be noted that the error at a specific layer $i$ of the network $\delta^{l-1}$ can be described as:
+However, it will be noted that the error at a specific layer $i-1$ of the network (a value important for calculating the gradient of the cost function) can be recursively described as:
 
 \[
 \delta^{i-1} = (f^{i-1})'\left(\left(W^i\right)^T\delta^i\right)
@@ -92,10 +95,13 @@ However, it will be noted that the error at a specific layer $i$ of the network 
 
 where $\delta^{i-1}$ is a vector representing the error at layer $i - 1$, $(f^{i-1})'$ is the derivative of the activation function, $W^i$ is the matrix of weights at layer $i$, and $\delta^i$ is the error at layer $i$.
 
+\bigskip
+
 It is beneficial to describe these equations in terms of matrix-vector multiplication and vector addition to enable the usage of linear algebra libraries.
 These libraries are code written by other people that take advantage of various optimizations to compute matrix-vector products faster than can usually be done when writing code by hand.
 
 \section{Figures}
+
 
 
 \section{Glossary}
